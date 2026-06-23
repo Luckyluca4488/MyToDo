@@ -148,13 +148,7 @@ body.light .dialog-nein:hover { background: #e0e0ea; color: #1a1a2e; }
 }
 
 .ordner-header:hover { background: #22223a; }
-
-.ordner-pfeil {
-    font-size: 0.8rem;
-    color: #888;
-    transition: transform 0.3s;
-}
-
+.ordner-pfeil { font-size: 0.8rem; color: #888; transition: transform 0.3s; }
 .ordner.offen .ordner-pfeil { transform: rotate(90deg); }
 .ordner-name { flex: 1; font-size: 1.1rem; font-weight: bold; }
 .ordner-prozent { font-size: 0.9rem; color: #7c6ff7; font-weight: bold; }
@@ -452,3 +446,59 @@ body.light .dialog-nein:hover { background: #e0e0ea; color: #1a1a2e; }
 }
 
 .dialog-ja:hover { background: #c73652; transform: scale(1.05); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+
+    body { padding: 12px; }
+    .app { max-width: 100%; }
+    .header h1 { font-size: 1.5rem; }
+
+    .header-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .theme-btn, .notif-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .eingabe-bereich { flex-direction: column; }
+    .eingabe-bereich button { width: 100%; }
+
+    .ordner-name { font-size: 0.95rem; }
+    .ordner-prozent { font-size: 0.8rem; }
+
+    .aufgabe-eingabe { flex-direction: column; }
+
+    .aufgabe-eingabe input[type="text"],
+    .aufgabe-eingabe input[type="date"],
+    .aufgabe-eingabe select,
+    .aufgabe-eingabe button { width: 100%; }
+
+    .unterordner-eingabe { flex-direction: column; }
+    .unterordner-eingabe input,
+    .unterordner-eingabe button { width: 100%; }
+
+    .aufgabe { padding: 10px; gap: 8px; }
+    .aufgabe-text { font-size: 0.88rem; }
+
+    .dialog-box { min-width: unset; width: 90%; padding: 20px 16px; }
+    .dialog-buttons { flex-direction: column; }
+    .dialog-nein, .dialog-ja { width: 100%; }
+
+    .faellig-banner {
+        font-size: 0.85rem;
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .header h1 { font-size: 1.3rem; }
+    .ordner-header { padding: 10px 12px; }
+    .ordner-name { font-size: 0.85rem; }
+    .unterordner-btn { font-size: 0.75rem; padding: 5px 10px; }
+}
