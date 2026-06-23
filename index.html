@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTodo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7c6ff7">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+
+    <div class="app">
+
+        <div class="header">
+            <h1>📝 Meine Aufgaben</h1>
+            <p class="datum" id="datum"></p>
+            <div class="header-buttons">
+                <button class="theme-btn" onclick="themeToggle()" id="themeBtn">☀️ Light Mode</button>
+                <button class="notif-btn" onclick="benachrichtigungErlauben()" id="notifBtn">🔔 Benachrichtigungen</button>
+            </div>
+        </div>
+
+        <div class="faellig-banner" id="faelligBanner" style="display:none">
+            <span id="faelligText"></span>
+            <button onclick="bannerSchliessen()">✕</button>
+        </div>
+
+        <div class="eingabe-bereich">
+            <input type="text" id="ordnerEingabe" placeholder="Neuer Hauptordner...">
+            <button onclick="ordnerHinzufuegen(null)">📁 Ordner</button>
+        </div>
+
+        <div id="ordnerListe"></div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./sw.js")
+                .then(() => console.log("Service Worker aktiv!"))
+                .catch(e => console.log("Fehler:", e));
+        }
+    </script>
+</body>
+</html>
