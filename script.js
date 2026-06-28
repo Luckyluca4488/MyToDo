@@ -20,13 +20,18 @@ document.getElementById("datum").textContent =
         weekday: "long", day: "numeric", month: "long"
     });
 
-// ── TABS ────────────────────────────────────────────────
-function tabWechseln(name) {
-    document.querySelectorAll(".tab-seite").forEach(s => s.classList.remove("aktiv"));
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("aktiv"));
-    document.getElementById("seite-" + name).classList.add("aktiv");
-    document.getElementById("tab-" + name).classList.add("aktiv");
-    if (name === "einstellungen") katListeRendern();
+// ── EINSTELLUNGEN PANEL ─────────────────────────────────
+function einstellungenOeffnen() {
+    document.getElementById("seite-einstellungen").classList.add("offen");
+    document.getElementById("einstellungen-overlay").classList.add("offen");
+    document.body.style.overflow = "hidden";
+    katListeRendern();
+}
+
+function einstellungenSchliessen() {
+    document.getElementById("seite-einstellungen").classList.remove("offen");
+    document.getElementById("einstellungen-overlay").classList.remove("offen");
+    document.body.style.overflow = "";
 }
 
 // ── DIALOG ──────────────────────────────────────────────
@@ -91,16 +96,19 @@ function hauptfarbeLaden() {
 
 // ── HINTERGRUND ─────────────────────────────────────────
 const hintergruende = {
-    standard: { dark: "#0f0f1a", card: "#1a1a2e", border: "#2a2a3a", input: "#0f0f1a" },
-    blau:     { dark: "#0a0f1e", card: "#0d1b3e", border: "#1a2a5e", input: "#08101a" },
-    gruen:    { dark: "#0a150a", card: "#0f200f", border: "#1a3a1a", input: "#081008" },
-    rot:      { dark: "#1a0a0a", card: "#2a0f0f", border: "#3a1a1a", input: "#150808" },
-    hell:     { dark: "#f0f0f5", card: "#ffffff",  border: "#ddddee", input: "#f8f8ff" }
+    standard: { bg: "#0f0f1a",  card: "#1a1a2e", border: "#2a2a3a", input: "#0f0f1a", gradient: "none" },
+    blau:     { bg: "#050d1f",  card: "#0a1a3a", border: "#1a2a5e", input: "#06101f", gradient: "linear-gradient(135deg, #050d1f 0%, #0a1a3a 100%)" },
+    gruen:    { bg: "#061206",  card: "#0d200d", border: "#1a3a1a", input: "#081008", gradient: "linear-gradient(135deg, #061206 0%, #0d2010 100%)" },
+    rot:      { bg: "#1a0505",  card: "#2a0a0a", border: "#3a1515", input: "#150505", gradient: "linear-gradient(135deg, #1a0505 0%, #2a0a0f 100%)" },
+    lila:     { bg: "#0d0820",  card: "#160f30", border: "#2a1a50", input: "#0a0618", gradient: "linear-gradient(135deg, #0d0820 0%, #1a0f35 100%)" },
+    hell:     { bg: "#f0f0f5",  card: "#ffffff",  border: "#ddddee", input: "#f8f8ff", gradient: "none" }
 };
 
 function hintergrundSetzen(name) {
     const hg = hintergruende[name] || hintergruende.standard;
-    document.documentElement.style.setProperty("--bg", hg.dark);
+    const bgWert = hg.gradient !== "none" ? hg.gradient : hg.bg;
+    document.body.style.setProperty("background", bgWert, "important");
+    document.documentElement.style.setProperty("--bg", hg.bg);
     document.documentElement.style.setProperty("--card", hg.card);
     document.documentElement.style.setProperty("--border", hg.border);
     document.documentElement.style.setProperty("--input", hg.input);
@@ -179,7 +187,7 @@ function alleDatenLoeschen() {
         daten = [];
         speichern();
         rendern();
-        tabWechseln("aufgaben");
+        einstellungenSchliessen();
     });
 }
 
