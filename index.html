@@ -12,17 +12,18 @@
 <body>
 <div class="app">
 
-  <!-- ── NAVIGATION TABS ── -->
-  <nav class="tab-nav">
-    <button class="tab-btn aktiv" onclick="tabWechseln('aufgaben')" id="tab-aufgaben">📝 Aufgaben</button>
-    <button class="tab-btn" onclick="tabWechseln('einstellungen')" id="tab-einstellungen">⚙️ Einstellungen</button>
-  </nav>
-
   <!-- ══════════ TAB: AUFGABEN ══════════ -->
   <div id="seite-aufgaben" class="tab-seite aktiv">
 
     <div class="header">
-      <h1>📝 Meine Aufgaben</h1>
+      <div class="header-top">
+        <h1>📝 Meine Aufgaben</h1>
+        <button class="hamburger-btn" onclick="einstellungenOeffnen()" id="hamburgerBtn" aria-label="Einstellungen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
       <p class="datum" id="datum"></p>
       <div class="header-buttons">
         <button class="notif-btn" onclick="benachrichtigungErlauben()" id="notifBtn">🔔 Benachrichtigungen</button>
@@ -42,12 +43,13 @@
     <div id="ordnerListe"></div>
   </div>
 
-  <!-- ══════════ TAB: EINSTELLUNGEN ══════════ -->
-  <div id="seite-einstellungen" class="tab-seite">
+  <!-- ══════════ EINSTELLUNGEN PANEL ══════════ -->
+  <div id="einstellungen-overlay" class="einstellungen-overlay" onclick="einstellungenSchliessen()"></div>
+  <div id="seite-einstellungen" class="einstellungen-panel">
 
-    <div class="header">
-      <h1>⚙️ Einstellungen</h1>
-      <p class="datum-sub">Passe deine App an</p>
+    <div class="einstellungen-panel-header">
+      <button class="zurueck-btn" onclick="einstellungenSchliessen()">✕</button>
+      <h2>⚙️ Einstellungen</h2>
     </div>
 
     <!-- Design -->
@@ -81,8 +83,9 @@
           <button class="hg-btn aktiv" data-hg="standard" onclick="hintergrundSetzen('standard')" title="Standard">🌑 Standard</button>
           <button class="hg-btn" data-hg="blau" onclick="hintergrundSetzen('blau')" title="Ozean">🌊 Ozean</button>
           <button class="hg-btn" data-hg="gruen" onclick="hintergrundSetzen('gruen')" title="Wald">🌲 Wald</button>
-          <button class="hg-btn" data-hg="rot" onclick="hintergrundSetzen('rot')" title="Vulkan">🌋 Vulkan</button>
-          <button class="hg-btn" data-hg="hell" onclick="hintergrundSetzen('hell')" title="Weiß">☁️ Hell</button>
+          <button class="hg-btn" data-hg="rot" onclick="hintergrundSetzen('rot')" title="Rot">🔴 Rot</button>
+          <button class="hg-btn" data-hg="lila" onclick="hintergrundSetzen('lila')" title="Lila">🟣 Lila</button>
+          <button class="hg-btn" data-hg="hell" onclick="hintergrundSetzen('hell')" title="Hell">☁️ Hell</button>
         </div>
       </div>
     </div>
@@ -124,7 +127,7 @@
       </div>
     </div>
 
-  </div><!-- /einstellungen -->
+  </div><!-- /einstellungen-panel -->
 </div><!-- /app -->
 
 <!-- ── DIALOG ── -->
