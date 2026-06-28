@@ -63,40 +63,109 @@ body.light .notif-setting-btn { background: #e8e8f5; color: #333; }
 /* ── APP ── */
 .app { max-width: 650px; margin: 0 auto; }
 
-/* ── TAB NAVIGATION ── */
-.tab-nav {
+/* ── HAMBURGER BUTTON ── */
+.header-top {
     display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.header-top h1 { flex: 1; text-align: center; }
+
+.hamburger-btn {
+    position: absolute;
+    right: 0;
     background: var(--card);
-    padding: 6px;
-    border-radius: 14px;
     border: 2px solid var(--border);
-}
-
-.tab-btn {
-    flex: 1;
-    background: transparent;
-    color: var(--text-sub);
-    border: none;
-    padding: 10px 16px;
     border-radius: 10px;
-    font-size: 0.95rem;
+    padding: 8px 10px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     transition: all 0.2s;
-    font-weight: bold;
 }
 
-.tab-btn.aktiv {
-    background: var(--haupt);
-    color: white;
+.hamburger-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s;
 }
 
-.tab-btn:not(.aktiv):hover { background: var(--border); color: var(--text); }
+.hamburger-btn:hover { border-color: var(--haupt); }
+.hamburger-btn:hover span { background: var(--haupt); }
 
-/* ── TAB SEITEN ── */
-.tab-seite { display: none; }
-.tab-seite.aktiv { display: block; }
+/* ── EINSTELLUNGEN OVERLAY ── */
+.einstellungen-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(3px);
+    z-index: 200;
+}
+
+.einstellungen-overlay.offen { display: block; }
+
+/* ── EINSTELLUNGEN SLIDE PANEL ── */
+.einstellungen-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(360px, 92vw);
+    height: 100vh;
+    background: var(--card);
+    border-left: 2px solid var(--border);
+    z-index: 300;
+    overflow-y: auto;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 0 40px 0;
+}
+
+.einstellungen-panel.offen { right: 0; }
+
+.einstellungen-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    z-index: 1;
+}
+
+.einstellungen-panel-header h2 {
+    font-size: 1.1rem;
+    color: var(--haupt);
+}
+
+.zurueck-btn {
+    background: var(--border);
+    border: none;
+    color: var(--text);
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.zurueck-btn:hover { background: #e94560; color: white; }
+
+.einstellungen-panel .einstellung-karte {
+    margin: 16px 16px 0 16px;
+}
 
 /* HEADER */
 .header { text-align: center; margin-bottom: 24px; }
