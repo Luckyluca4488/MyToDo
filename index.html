@@ -1,48 +1,142 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyTodo</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#7c6ff7">
-    <meta name="mobile-web-app-capable" content="yes">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyTodo</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7c6ff7">
+<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
+<div class="app">
 
-    <div class="app">
+  <!-- ── NAVIGATION TABS ── -->
+  <nav class="tab-nav">
+    <button class="tab-btn aktiv" onclick="tabWechseln('aufgaben')" id="tab-aufgaben">📝 Aufgaben</button>
+    <button class="tab-btn" onclick="tabWechseln('einstellungen')" id="tab-einstellungen">⚙️ Einstellungen</button>
+  </nav>
 
-        <div class="header">
-            <h1>📝 Meine Aufgaben</h1>
-            <p class="datum" id="datum"></p>
-            <div class="header-buttons">
-                <button class="theme-btn" onclick="themeToggle()" id="themeBtn">☀️ Light Mode</button>
-                <button class="notif-btn" onclick="benachrichtigungErlauben()" id="notifBtn">🔔 Benachrichtigungen</button>
-            </div>
-        </div>
+  <!-- ══════════ TAB: AUFGABEN ══════════ -->
+  <div id="seite-aufgaben" class="tab-seite aktiv">
 
-        <div class="faellig-banner" id="faelligBanner" style="display:none">
-            <span id="faelligText"></span>
-            <button onclick="bannerSchliessen()">✕</button>
-        </div>
-
-        <div class="eingabe-bereich">
-            <input type="text" id="ordnerEingabe" placeholder="Neuer Hauptordner...">
-            <button onclick="ordnerHinzufuegen(null)">📁 Ordner</button>
-        </div>
-
-        <div id="ordnerListe"></div>
-
+    <div class="header">
+      <h1>📝 Meine Aufgaben</h1>
+      <p class="datum" id="datum"></p>
+      <div class="header-buttons">
+        <button class="notif-btn" onclick="benachrichtigungErlauben()" id="notifBtn">🔔 Benachrichtigungen</button>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./sw.js")
-                .then(() => console.log("Service Worker aktiv!"))
-                .catch(e => console.log("Fehler:", e));
-        }
-    </script>
+    <div class="faellig-banner" id="faelligBanner" style="display:none">
+      <span id="faelligText"></span>
+      <button onclick="bannerSchliessen()">✕</button>
+    </div>
+
+    <div class="eingabe-bereich">
+      <input type="text" id="ordnerEingabe" placeholder="Neuer Ordner...">
+      <button onclick="ordnerHinzufuegen(null)">📁 Ordner</button>
+    </div>
+
+    <div id="ordnerListe"></div>
+  </div>
+
+  <!-- ══════════ TAB: EINSTELLUNGEN ══════════ -->
+  <div id="seite-einstellungen" class="tab-seite">
+
+    <div class="header">
+      <h1>⚙️ Einstellungen</h1>
+      <p class="datum-sub">Passe deine App an</p>
+    </div>
+
+    <!-- Design -->
+    <div class="einstellung-karte">
+      <h2 class="einstellung-titel">🎨 Design</h2>
+
+      <div class="einstellung-zeile">
+        <span>Erscheinungsbild</span>
+        <div class="toggle-gruppe">
+          <button class="toggle-btn aktiv" id="btn-dark" onclick="themeSetzen('dark')">🌙 Dark</button>
+          <button class="toggle-btn" id="btn-light" onclick="themeSetzen('light')">☀️ Light</button>
+        </div>
+      </div>
+
+      <div class="einstellung-zeile">
+        <span>Hauptfarbe</span>
+        <div class="farb-auswahl">
+          <button class="farb-btn aktiv" style="background:#7c6ff7" data-farbe="#7c6ff7" onclick="hauptfarbeSetzen('#7c6ff7')" title="Lila"></button>
+          <button class="farb-btn" style="background:#e94560" data-farbe="#e94560" onclick="hauptfarbeSetzen('#e94560')" title="Rot"></button>
+          <button class="farb-btn" style="background:#27ae60" data-farbe="#27ae60" onclick="hauptfarbeSetzen('#27ae60')" title="Grün"></button>
+          <button class="farb-btn" style="background:#3498db" data-farbe="#3498db" onclick="hauptfarbeSetzen('#3498db')" title="Blau"></button>
+          <button class="farb-btn" style="background:#f39c12" data-farbe="#f39c12" onclick="hauptfarbeSetzen('#f39c12')" title="Orange"></button>
+          <button class="farb-btn" style="background:#e91e8c" data-farbe="#e91e8c" onclick="hauptfarbeSetzen('#e91e8c')" title="Pink"></button>
+          <input type="color" id="eigenefarbe" value="#7c6ff7" oninput="hauptfarbeSetzen(this.value)" title="Eigene Farbe" class="farb-custom">
+        </div>
+      </div>
+
+      <div class="einstellung-zeile">
+        <span>Hintergrund</span>
+        <div class="hintergrund-auswahl">
+          <button class="hg-btn aktiv" data-hg="standard" onclick="hintergrundSetzen('standard')" title="Standard">🌑 Standard</button>
+          <button class="hg-btn" data-hg="blau" onclick="hintergrundSetzen('blau')" title="Ozean">🌊 Ozean</button>
+          <button class="hg-btn" data-hg="gruen" onclick="hintergrundSetzen('gruen')" title="Wald">🌲 Wald</button>
+          <button class="hg-btn" data-hg="rot" onclick="hintergrundSetzen('rot')" title="Vulkan">🌋 Vulkan</button>
+          <button class="hg-btn" data-hg="hell" onclick="hintergrundSetzen('hell')" title="Weiß">☁️ Hell</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kategorien -->
+    <div class="einstellung-karte">
+      <h2 class="einstellung-titel">🏷️ Kategorien verwalten</h2>
+      <p class="einstellung-info">Füge eigene Kategorien hinzu oder lösche bestehende.</p>
+
+      <ul class="kat-liste" id="katListe"></ul>
+
+      <div class="kat-eingabe-bereich">
+        <input type="text" id="katNameEingabe" placeholder="Kategorie Name..." maxlength="20">
+        <input type="text" id="katSymbolEingabe" placeholder="Emoji 🎯" maxlength="2">
+        <button onclick="kategorieHinzufuegen()">+ Hinzufügen</button>
+      </div>
+    </div>
+
+    <!-- Benachrichtigungen -->
+    <div class="einstellung-karte">
+      <h2 class="einstellung-titel">🔔 Benachrichtigungen</h2>
+
+      <div class="einstellung-zeile">
+        <span>Push-Benachrichtigungen</span>
+        <button class="notif-setting-btn" onclick="benachrichtigungErlauben()" id="notifSettingBtn">Aktivieren</button>
+      </div>
+      <div class="einstellung-zeile">
+        <span>Tägliche Erinnerung</span>
+        <input type="time" id="erinnerungZeit" class="zeit-input" value="08:00" onchange="erinnerungSpeichern()">
+      </div>
+    </div>
+
+    <!-- Daten -->
+    <div class="einstellung-karte">
+      <h2 class="einstellung-titel">💾 Daten</h2>
+      <div class="einstellung-zeile">
+        <span>Alle Daten löschen</span>
+        <button class="gefahr-btn" onclick="alleDatenLoeschen()">🗑️ Zurücksetzen</button>
+      </div>
+    </div>
+
+  </div><!-- /einstellungen -->
+</div><!-- /app -->
+
+<!-- ── DIALOG ── -->
+<div id="dialog" style="display:none"></div>
+
+<script src="script.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Service Worker aktiv!"))
+      .catch(e => console.log("Fehler:", e));
+  }
+</script>
 </body>
 </html>
